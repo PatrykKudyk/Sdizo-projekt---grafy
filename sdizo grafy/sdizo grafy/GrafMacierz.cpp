@@ -3,12 +3,13 @@
 #include <fstream>
 #include <string>
 #include <sstream>
+#include <ctime>
 
 using namespace std;
 
 GrafMacierz::GrafMacierz()
 {
-
+	create();
 }
 
 
@@ -19,71 +20,75 @@ GrafMacierz::~GrafMacierz()
 
 void GrafMacierz::createRandom()
 {
-	
-	cout << "Podaj liczbe wierzcholkow:" << endl;
-	cin >> wierzcholek;
-	cout << "Podaj gestosc (w procentach):" << endl;
-	cin >> gestosc;
-	krawedz = ((gestosc*wierzcholek*(wierzcholek - 1)) / 200); // dzielimy przez 200, bo uwzgledniamy procentowosc gestoci (100) i (2), ktore jest podane we wzorze [2*100 = 200]
-	if(graf != nullptr)
-		clearMacierz();
+	ifstream plik;
+	plik.open("randomowe.txt", ios::in);
+	plik >> krawedz >> wierzcholek;
+	gestosc = ((2 * krawedz) / (wierzcholek*(wierzcholek - 1)));
+
+	clearMacierz();
+	create();
+
 	graf = new short int *[wierzcholek];	//tworze tablice wskaznikow, ktorej wielkosc jest rowna ilosci wierzcholkow
-	for(int i = 0; i < wierzcholek; i++)	//tworze wiersze w tablicy wskaznikow, wiersze dlugosci odpowiadajacej ilosci krawedzi
-	{
+
+	for (int i = 0; i < wierzcholek; i++)	//tworze wiersze w tablicy wskaznikow, wiersze dlugosci odpowiadajacej ilosci krawedzi
 		graf[i] = new short int[krawedz];
-	}
-	for(int i = 0; i < wierzcholek; i++)
-	{
+
+	for (int i = 0; i < wierzcholek; i++)
 		for (int j = 0; j < krawedz; j++)
-		{
 			graf[i][j] = 0;		//przypisuje wszystkim komorkom wartosc poczatkowa 0
-		}
+
+	wagi = new short int[krawedz];
+
+	int licznik = 0;
+	while (!plik.eof())
+	{
+		int wp, wk, waga;
+		plik >> wp >> wk >> waga;
+		graf[wp][licznik] = 1;
+		graf[wk][licznik] = -1;
+		wagi[licznik] = waga;
+		licznik++;
 	}
-
-
-
-
-
+	
+	plik.close();
 }
 
 void GrafMacierz::createGiven()
 {
-	/*int temp;
-	string bufor;
-	fstream file;
+	ifstream plik;
+	plik.open("dane.txt", ios::in);
+	plik >> krawedz >> wierzcholek;
+	gestosc = ((2 * krawedz) / (wierzcholek*(wierzcholek - 1)));
 
-	file.open("data.txt", ios::in);
-	if (file.good() == true)
-		cout << "Odczyt udany!" << endl;
-	else
-	{
-		cout << "Nieudane wczytywanie pliku!" << endl;
-		cin.get();
-		cin.get();
-	}
+	clearMacierz();
+	create();
+	graf = new short int *[wierzcholek];	//tworze tablice wskaznikow, ktorej wielkosc jest rowna ilosci wierzcholkow
+
+	for (int i = 0; i < wierzcholek; i++)	//tworze wiersze w tablicy wskaznikow, wiersze dlugosci odpowiadajacej ilosci krawedzi
+		graf[i] = new short int[krawedz];
+
+	for (int i = 0; i < wierzcholek; i++)
+		for (int j = 0; j < krawedz; j++)
+			graf[i][j] = 0;		//przypisuje wszystkim komorkom wartosc poczatkowa 0
+
+	wagi = new short int[krawedz];
+
 	int licznik = 0;
-	while (file.eof() == NULL)
+	while (!plik.eof())
 	{
-		getline(file, bufor);
-		istringstream iss(bufor);
-		iss >> temp;
-		if (licznik == 0)
-		{
-			
-		} else
-		{
-			
-		}
-		push(temp);
-		this->size++;
+		int wp, wk, waga;
+		plik >> wp >> wk >> waga;
+		graf[wp][licznik] = 1;
+		graf[wk][licznik] = -1;
+		wagi[licznik] = waga;
 		licznik++;
 	}
-	file.close();*/
+
+	plik.close();
 }
 
 void GrafMacierz::wypisz()
 {
-	system("cls");
 	cout << "Dane Twojego grafu:" << endl
 		<< "Wierzcholki: " << wierzcholek << endl
 		<< "Krawedzie: " << krawedz << endl
@@ -117,6 +122,14 @@ void GrafMacierz::wypisz()
 				cout << "~";
 		cout << endl;
 	}
+	cout << "Wagi krawedzi:\n";
+	for (int i = 0; i < krawedz; i++)
+		cout << i << "\t";
+	cout << endl;
+	for (int i = 0; i < krawedz; i++)
+		cout << wagi[i] << "\t";
+	cout << endl;
+	
 	cin.get();
 	cin.get();
 }
@@ -126,4 +139,18 @@ void GrafMacierz::clearMacierz()
 	for (int i = 0; i < wierzcholek; i++) 
 		delete[] graf[i];
 	delete[] graf;
+	delete[] wagi;
+
+}
+
+void GrafMacierz::create()
+{
+	short int ** temp;
+	short int * temp2;
+	temp = new short int*[10];
+	for (int i = 0; i < 10; i++)
+		temp[i] = new short[22];
+	temp2 = new short int[5];
+	graf = temp;
+	wagi = temp2;
 }

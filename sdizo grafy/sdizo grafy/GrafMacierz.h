@@ -1,10 +1,10 @@
 #pragma once
-#include <vector>
 
 class GrafMacierz
 {
 	int krawedz, wierzcholek, gestosc;
 	short int **graf;
+	short int *wagi;
 public:
 	GrafMacierz();
 	~GrafMacierz();
@@ -12,5 +12,6 @@ public:
 	void createGiven();
 	void wypisz();
 	void clearMacierz();
+	void create();
 };
 

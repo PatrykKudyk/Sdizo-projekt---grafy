@@ -2,13 +2,10 @@
 #include <ctime>
 #include "Menu.h"
 
+using namespace std;
 int main()
 {
-//	srand(time(NULL));
-
-	GrafMacierz graf;
-	graf.createRandom();
-	graf.wypisz();
-	
+	Menu menu;
+	menu.menuGlowne();
 	return 0;
 }

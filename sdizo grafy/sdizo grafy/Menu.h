@@ -10,6 +10,7 @@ class Menu
 public:
 	Menu();
 	~Menu();
+	void genRand(int wierzcholki, int gestosc);
 	void menuGlowne();
 
 };
