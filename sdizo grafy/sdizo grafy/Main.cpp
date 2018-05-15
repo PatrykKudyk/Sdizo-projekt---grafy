@@ -7,5 +7,6 @@ int main()
 {
 	Menu menu;
 	menu.menuGlowne();
-	return 0;
+	cin.get();
+	exit(EXIT_SUCCESS);
 }

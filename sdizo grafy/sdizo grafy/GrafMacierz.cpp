@@ -134,5 +134,4 @@ void GrafMacierz::clearMacierz()
 			delete[] graf[i];
 	delete[] graf;
 	delete[] wagi;
-
 }
