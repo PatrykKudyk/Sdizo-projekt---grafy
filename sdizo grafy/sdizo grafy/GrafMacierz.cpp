@@ -9,7 +9,6 @@ using namespace std;
 
 GrafMacierz::GrafMacierz()
 {
-	create();
 }
 
 
@@ -23,11 +22,7 @@ void GrafMacierz::createRandom()
 	ifstream plik;
 	plik.open("randomowe.txt", ios::in);
 	plik >> krawedz >> wierzcholek;
-	gestosc = ((2 * krawedz) / (wierzcholek*(wierzcholek - 1)));
-
-	clearMacierz();
-	create();
-
+	gestosc = ((200 * krawedz) / (wierzcholek*(wierzcholek - 1)));
 	graf = new short int *[wierzcholek];	//tworze tablice wskaznikow, ktorej wielkosc jest rowna ilosci wierzcholkow
 
 	for (int i = 0; i < wierzcholek; i++)	//tworze wiersze w tablicy wskaznikow, wiersze dlugosci odpowiadajacej ilosci krawedzi
@@ -61,7 +56,6 @@ void GrafMacierz::createGiven()
 	gestosc = ((2 * krawedz) / (wierzcholek*(wierzcholek - 1)));
 
 	clearMacierz();
-	create();
 	graf = new short int *[wierzcholek];	//tworze tablice wskaznikow, ktorej wielkosc jest rowna ilosci wierzcholkow
 
 	for (int i = 0; i < wierzcholek; i++)	//tworze wiersze w tablicy wskaznikow, wiersze dlugosci odpowiadajacej ilosci krawedzi
@@ -137,20 +131,8 @@ void GrafMacierz::wypisz()
 void GrafMacierz::clearMacierz()
 {
 	for (int i = 0; i < wierzcholek; i++) 
-		delete[] graf[i];
+			delete[] graf[i];
 	delete[] graf;
 	delete[] wagi;
 
-}
-
-void GrafMacierz::create()
-{
-	short int ** temp;
-	short int * temp2;
-	temp = new short int*[10];
-	for (int i = 0; i < 10; i++)
-		temp[i] = new short[22];
-	temp2 = new short int[5];
-	graf = temp;
-	wagi = temp2;
 }

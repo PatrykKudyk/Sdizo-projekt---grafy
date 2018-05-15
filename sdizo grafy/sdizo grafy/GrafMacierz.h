@@ -12,6 +12,5 @@ public:
 	void createGiven();
 	void wypisz();
 	void clearMacierz();
-	void create();
 };
 
