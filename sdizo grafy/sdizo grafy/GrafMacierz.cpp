@@ -130,7 +130,7 @@ void GrafMacierz::wypisz()
 
 void GrafMacierz::clearMacierz()
 {
-	for (int i = 0; i < wierzcholek; i++) 
+	for (int i = 0; i < krawedz; i++) 
 			delete[] graf[i];
 	delete[] graf;
 	delete[] wagi;
