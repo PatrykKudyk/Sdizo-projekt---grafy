@@ -34,7 +34,7 @@ void Menu::genRand(int wierzcholki, int gestosc)
 				w2 = rand() % wierzcholki;
 			} while (w1 == w2);
 
-			plik << w1 << " " << w2 << " " << rand() % 10 << endl;
+			plik << w1 << " " << w2 << " " << (rand() % 1000) + 1 << endl;
 		}
 	}
 	plik.close();
@@ -57,6 +57,7 @@ void Menu::menuGlowne()
 		{
 		case 1:
 			grafM.createGiven();
+			grafL.createGiven();
 			cout << "Zrobione!" << endl;
 			cin.get();
 			cin.get();
@@ -69,6 +70,7 @@ void Menu::menuGlowne()
 			cin >> gestosc;
 			genRand(wierzcholki, gestosc);
 			grafM.createRandom();
+			grafL.createRandom();
 			cout << "Zrobione!" << endl;
 			cin.get();
 			cin.get();
@@ -76,6 +78,7 @@ void Menu::menuGlowne()
 		case 3:
 			system("cls");
 			cout << "Graf na liscie:\n\n";
+			grafL.wypisz();
 			cout << "Graf na macierzy:\n";
 			grafM.wypisz();
 			break;

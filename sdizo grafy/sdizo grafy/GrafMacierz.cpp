@@ -34,10 +34,10 @@ void GrafMacierz::createRandom()
 
 	wagi = new short int[krawedz];
 
-	int licznik = 0;
+	int licznik = 0, wp, wk, waga;
+
 	while (!plik.eof())
 	{
-		int wp, wk, waga;
 		plik >> wp >> wk >> waga;
 		graf[wp][licznik] = 1;
 		graf[wk][licznik] = -1;
