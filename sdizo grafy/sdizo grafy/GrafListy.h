@@ -10,6 +10,7 @@ public:
 	~GrafListy();
 	void createRandom();
 	void createGiven();
+	bool czySpojny();
 	void wypisz();
 	void clearGraf();
 };

@@ -72,6 +72,15 @@ void GrafListy::createGiven()
 	plik.close();
 }
 
+bool GrafListy::czySpojny()
+{
+	bool spojny = false;
+
+
+
+	return spojny;
+}
+
 void GrafListy::wypisz()
 {
 	Node *p;
