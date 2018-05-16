@@ -21,14 +21,6 @@ void Menu::genRand(int wierzcholki, int gestosc)
 	fstream plik;
 	int krawedzie = ((gestosc*wierzcholki*(wierzcholki - 1)) / 200); // dzielimy przez 200, bo uwzgledniamy procentowosc gestoci (100) i (2), ktore jest podane we wzorze [2*100 = 200]
 
-	
-	/*	short int** wylosowane = new short int*[krawedzie];
-	for (int i = 0; i < krawedzie; i++)
-		wylosowane[i] = new short int[2];
-	for (int i = 0; i < krawedzie; i++)
-		for (int j = 0; j < 2; j++)
-			wylosowane[i][j] = 0;*/
-
 	plik.open("randomowe.txt", ios::out);
 	for (int i = 0, w1, w2; i <= krawedzie; i++)
 	{
@@ -36,21 +28,16 @@ void Menu::genRand(int wierzcholki, int gestosc)
 			plik << krawedzie << " " << wierzcholki << endl;
 		else
 		{
-				do
-				{
-					w1 = rand() % wierzcholki;
-					w2 = rand() % wierzcholki;
-				} while (w1 == w2);
+			do
+			{
+				w1 = rand() % wierzcholki;
+				w2 = rand() % wierzcholki;
+			} while (w1 == w2);
 
 			plik << w1 << " " << w2 << " " << rand() % 10 << endl;
 		}
 	}
 	plik.close();
-
-/*	for (int i = 0; i < 2; i++)
-		delete[] wylosowane[i];
-	delete[] wylosowane;*/
-
 }
 
 void Menu::menuGlowne()
