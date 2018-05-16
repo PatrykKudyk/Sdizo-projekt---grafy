@@ -51,11 +51,9 @@ void GrafMacierz::createRandom()
 void GrafMacierz::createGiven()
 {
 	ifstream plik;
-	plik.open("dane.txt", ios::in);
+	plik.open("podane.txt", ios::in);
 	plik >> krawedz >> wierzcholek;
-	gestosc = ((2 * krawedz) / (wierzcholek*(wierzcholek - 1)));
-
-	clearMacierz();
+	gestosc = ((200 * krawedz) / (wierzcholek*(wierzcholek - 1)));
 	graf = new short int *[wierzcholek];	//tworze tablice wskaznikow, ktorej wielkosc jest rowna ilosci wierzcholkow
 
 	for (int i = 0; i < wierzcholek; i++)	//tworze wiersze w tablicy wskaznikow, wiersze dlugosci odpowiadajacej ilosci krawedzi

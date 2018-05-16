@@ -20,6 +20,9 @@ void Menu::genRand(int wierzcholki, int gestosc)
 	srand(time(NULL));
 	fstream plik;
 	int krawedzie = ((gestosc*wierzcholki*(wierzcholki - 1)) / 200); // dzielimy przez 200, bo uwzgledniamy procentowosc gestoci (100) i (2), ktore jest podane we wzorze [2*100 = 200]
+	short int** wylosowane = new short int*[krawedzie];
+	for (int i = 0; i < krawedzie; i++)
+		wylosowane[i] = new short int[2];
 	plik.open("randomowe.txt", ios::out);
 	for (int i = 0, w1, w2; i <= krawedzie; i++)
 	{
@@ -36,6 +39,9 @@ void Menu::genRand(int wierzcholki, int gestosc)
 		}
 	}
 	plik.close();
+	for (int i = 0; i < 2; i++)
+		delete[] wylosowane[i];
+	delete[] wylosowane;
 }
 
 void Menu::menuGlowne()
@@ -54,6 +60,10 @@ void Menu::menuGlowne()
 		switch (wybor)
 		{
 		case 1:
+			grafM.createGiven();
+			cout << "Zrobione!" << endl;
+			cin.get();
+			cin.get();
 			break;
 		case 2:
 			system("cls");
@@ -63,11 +73,14 @@ void Menu::menuGlowne()
 			cin >> gestosc;
 			genRand(wierzcholki, gestosc);
 			grafM.createRandom();
+			cout << "Zrobione!" << endl;
+			cin.get();
+			cin.get();
 			break;
 		case 3:
 			system("cls");
-			cout << "Graf na liscie:\t\t";
-			cout << "Graf na macierzy:\t";
+			cout << "Graf na liscie:\n\n";
+			cout << "Graf na macierzy:\n";
 			grafM.wypisz();
 			break;
 		case 4:
