@@ -3,7 +3,8 @@
 class GrafMacierz
 {
 	int krawedz, wierzcholek, gestosc;
-	short int **graf;
+	short int **grafS;
+	short int **grafNS;
 	short int *wagi;
 public:
 	GrafMacierz();

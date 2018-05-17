@@ -5,6 +5,7 @@ class GrafListy
 {
 	int krawedz, wierzcholek, gestosc;
 	List *grafS;
+	List *grafNS;
 public:
 	GrafListy();
 	~GrafListy();

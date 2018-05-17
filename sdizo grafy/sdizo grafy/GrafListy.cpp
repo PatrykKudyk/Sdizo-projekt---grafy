@@ -16,6 +16,7 @@ GrafListy::~GrafListy()
 
 void GrafListy::createRandom()
 {
+	int wp, wk, waga;
 	ifstream plik;
 	if (wierzcholek != 0)
 		clearGraf();
@@ -24,20 +25,25 @@ void GrafListy::createRandom()
 	gestosc = ((200 * krawedz) / (wierzcholek*(wierzcholek - 1)));
 
 	grafS = new List[wierzcholek];
+	grafNS = new List[wierzcholek];
 
 	for (int i = 0; i < wierzcholek; i++)
 	{
-		List p;
-		grafS[i] = p;
+		List p1, p2;
+		grafS[i] = p1;
+		grafNS[i] = p2;
 	}
 	for (int i = 0; i < wierzcholek; i++)		//przypisuje wszystkim komorkom wartosc poczatkowa 0,0
-		grafS[i].push(0,0);			
-
-	int wp, wk, waga;
+	{
+		grafS[i].push(0, 0);
+		grafNS[i].push(0, 0);
+	}
 	while (!plik.eof())
 	{
 		plik >> wp >> wk >> waga;
 		grafS[wp].push(wk, waga);
+		grafNS[wp].push(wk, waga);
+		grafNS[wk].push(wp, waga);
 	}
 
 	plik.close();
@@ -45,6 +51,7 @@ void GrafListy::createRandom()
 
 void GrafListy::createGiven()
 {
+	int wp, wk, waga;
 	ifstream plik;
 	if (wierzcholek != 0)
 		clearGraf();
@@ -53,20 +60,25 @@ void GrafListy::createGiven()
 	gestosc = ((200 * krawedz) / (wierzcholek*(wierzcholek - 1)));
 
 	grafS = new List[wierzcholek];
+	grafNS = new List[wierzcholek];
 
 	for (int i = 0; i < wierzcholek; i++)
 	{
-		List p;
-		grafS[i] = p;
+		List p1, p2;
+		grafS[i] = p1;
+		grafNS[i] = p2;
 	}
 	for (int i = 0; i < wierzcholek; i++)		//przypisuje wszystkim komorkom wartosc poczatkowa 0,0
+	{
 		grafS[i].push(0, 0);
-
-	int wp, wk, waga;
+		grafNS[i].push(0, 0);
+	}
 	while (!plik.eof())
 	{
 		plik >> wp >> wk >> waga;
 		grafS[wp].push(wk, waga);
+		grafNS[wp].push(wk, waga);
+		grafNS[wk].push(wp, waga);
 	}
 
 	plik.close();
@@ -88,10 +100,29 @@ void GrafListy::wypisz()
 		<< "Wierzcholki: " << wierzcholek << endl
 		<< "Krawedzie: " << krawedz << endl
 		<< "Gestosc: " << gestosc << "%" << endl
-		<< "Twoj graf w postaci spisu (wierzcholek/waga krawedzi):" << endl;
+		<< "Twoj graf w postaci spisu (wierzcholek/waga krawedzi):" << endl
+		<< "----------SKIEROWANY----------" << endl;
 	for (int i = 0; i < wierzcholek; i++)
 	{
 		p = grafS[i].getHead();
+		cout << "Graf[" << i << "] - ";
+		if (p == nullptr)
+			cout << "brak" << endl;
+		else
+		{
+			do
+			{
+				cout << "[" << p->data << " /" << p->waga << "]\t";
+				p = p->next;
+			} while (p->next);
+			cout << endl;
+		}
+	}
+	cout << endl << "----------NIESKIEROWANY----------" << endl;
+
+	for (int i = 0; i < wierzcholek; i++)
+	{
+		p = grafNS[i].getHead();
 		cout << "Graf[" << i << "] - ";
 		do
 		{
@@ -100,7 +131,6 @@ void GrafListy::wypisz()
 		} while (p->next);
 		cout << endl;
 	}
-	cout << endl;
 }
 
 void GrafListy::clearGraf()
@@ -108,4 +138,8 @@ void GrafListy::clearGraf()
 	for (int i = 0; i < wierzcholek; i++)
 		grafS->clearList();
 	delete[] grafS;
+
+	for (int i = 0; i < wierzcholek; i++)
+		grafNS->clearList();
+	delete[] grafNS;
 }
