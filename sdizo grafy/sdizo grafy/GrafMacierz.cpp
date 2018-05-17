@@ -8,7 +8,6 @@ GrafMacierz::GrafMacierz()
 {
 }
 
-
 GrafMacierz::~GrafMacierz()
 {
 	clearMacierz();
@@ -18,8 +17,6 @@ void GrafMacierz::createRandom()
 {
 	ifstream plik;
 	int licznik = 0, wp, wk, waga;
-	if (wierzcholek != 0)
-		clearMacierz();
 	plik.open("randomowe.txt", ios::in);
 	plik >> krawedz >> wierzcholek;
 	gestosc = ((200 * krawedz) / (wierzcholek*(wierzcholek - 1)));
@@ -54,8 +51,6 @@ void GrafMacierz::createGiven()
 {
 	ifstream plik;
 	int licznik = 0, wp, wk, waga;
-	if (wierzcholek != 0)
-		clearMacierz();
 	plik.open("podane.txt", ios::in);
 	plik >> krawedz >> wierzcholek;
 	gestosc = ((200 * krawedz) / (wierzcholek*(wierzcholek - 1)));
