@@ -17,6 +17,16 @@ void GrafMacierz::createRandom()
 {
 	ifstream plik;
 	int licznik = 0, wp, wk, waga;
+	if (wierzcholek != 0)
+	{
+		clearMacierz();
+		short int **temp1 = nullptr;
+		short int **temp2 = nullptr;
+		short int *temp3 = nullptr;
+		wagi = temp3;
+		grafS = temp1;
+		grafNS = temp2;
+	}
 	plik.open("randomowe.txt", ios::in);
 	plik >> krawedz >> wierzcholek;
 	gestosc = ((200 * krawedz) / (wierzcholek*(wierzcholek - 1)));
@@ -51,6 +61,16 @@ void GrafMacierz::createGiven()
 {
 	ifstream plik;
 	int licznik = 0, wp, wk, waga;
+	if (wierzcholek != 0)
+	{
+		clearMacierz();
+		short int **temp1 = nullptr;
+		short int **temp2 = nullptr;
+		short int *temp3 = nullptr;
+		wagi = temp3;
+		grafS = temp1;
+		grafNS = temp2;
+	}
 	plik.open("podane.txt", ios::in);
 	plik >> krawedz >> wierzcholek;
 	gestosc = ((200 * krawedz) / (wierzcholek*(wierzcholek - 1)));
@@ -182,10 +202,10 @@ void GrafMacierz::wypisz()
 
 void GrafMacierz::clearMacierz()
 {
-	for (int i = 0; i < krawedz; i++) 
+	for (int i = 0; i < wierzcholek; i++) 
 			delete[] grafS[i];
 	delete[] grafS;
-	for (int i = 0; i < krawedz; i++)
+	for (int i = 0; i < wierzcholek; i++)
 		delete[] grafNS[i];
 	delete[] grafNS;
 	delete[] wagi;

@@ -7,6 +7,8 @@ class Heap
 public:
 	void push(int val);
 	void pop();
+	bool isEmpty();
+	int getRoot();
 	void find(int val);
 	void clearHeap();
 	Heap();

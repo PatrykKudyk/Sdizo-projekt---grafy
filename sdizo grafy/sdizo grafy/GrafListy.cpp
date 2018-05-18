@@ -9,7 +9,6 @@ GrafListy::GrafListy()
 {
 }
 
-
 GrafListy::~GrafListy()
 {
 	clearGraf();
@@ -85,13 +84,23 @@ void GrafListy::createGiven()
 	plik.close();
 }
 
-bool GrafListy::czySpojny()
+bool GrafListy::czySpojny(int wklStart)
 {
-	bool spojny = false;
+	bool *odwiedzone = new bool[wierzcholek];
+	for (int i = 0; i < wierzcholek; i++)
+		odwiedzone[i] = false;
+
 	Heap kopiec;
+	odwiedzone[wklStart] = true;
+	kopiec.push(wklStart);
+
+	while(!kopiec.isEmpty())
+	{
+		wklStart = 
+	}
 
 
-	return spojny;
+	return ;
 }
 
 void GrafListy::DFS(int wierzcholek)
@@ -153,5 +162,4 @@ void GrafListy::clearGraf()
 	for (int i = 0; i < wierzcholek; i++)
 		grafNS->clearList();
 	delete[] grafNS;
-	//delete[] odwiedzone;
 }
