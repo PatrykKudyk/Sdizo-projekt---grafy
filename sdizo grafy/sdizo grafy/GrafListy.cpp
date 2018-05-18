@@ -68,11 +68,11 @@ void GrafListy::createGiven()
 		grafS[i] = p1;
 		grafNS[i] = p2;
 	}
-	for (int i = 0; i < wierzcholek; i++)		//przypisuje wszystkim komorkom wartosc poczatkowa 0,0
+	/*for (int i = 0; i < wierzcholek; i++)		//przypisuje wszystkim komorkom wartosc poczatkowa 0,0
 	{
 		grafS[i].push(0, 0);
 		grafNS[i].push(0, 0);
-	}
+	}*/
 	while (!plik.eof())
 	{
 		plik >> wp >> wk >> waga;
@@ -96,36 +96,67 @@ void GrafListy::dijkstra(int podPocz, int podKonc)
 
 	for (int i = 0; i < wierzcholek; i++)
 		dojscie[i] = INT_MAX;					//ustawiamy wszystkie wartosci dojscia na maksymalna wartosc dla inta
-	dojscie[podPocz] = -1;						//dla naszego wierzcholka poczatkowego ustawiamy wartosc -1
+	dojscie[podPocz] = 0;						//dla naszego wierzcholka poczatkowego ustawiamy wartosc 0
 
 	for (int i = 0; i < wierzcholek; i++)
 		poprzednik[i] = -1;						//tablice poprzednikow wypelniamy wartosciami -1
-	
-	int najmniejszeD = dojscie[0];				//ustawiamy losowa wartosc
+
+	int najmniejszeD;				//ustawiamy losowa wartosc
 	int numPom = NULL;
-	Node *p = nullptr;
+	
 
 	do
 	{
 		niepustyQ = false;
-
+		najmniejszeD = INT_MAX;
+		Node *p = nullptr;
 		for (int i = 0; i < wierzcholek; i++)
 			if (QS[i] == false)
 				if (dojscie[i] < najmniejszeD)
-				{				
+				{
 					najmniejszeD = dojscie[i];
 					numPom = i;
 				}
 		QS[numPom] = true;						//przeniesienie wierzcholka o najmniejszym koszcie dojscia do zbioru S
-		for(p = grafS[numPom].getHead();)
-		
-		
+		for (p = grafS[numPom].getHead();;)
+		{
+			if (QS[p->data] == false)
+			{
+				if (dojscie[p->data] > (dojscie[numPom] + p->waga))
+				{
+					dojscie[p->data] = (dojscie[numPom] + p->waga);
+					poprzednik[p->data] = numPom;
+				}
+			}
+			if (p->next == nullptr)
+				break;
+			p = p->next;
+		}
 
 		for (int i = 0; i < wierzcholek; i++)	//sprawdzamy czy zbior Q posiada jakies elementy
+		{
 			if (QS[i] == false)
 				niepustyQ = true;
+		}		
 
 	} while (niepustyQ);
+
+	if (podPocz == podKonc)
+		cout << "Sciezka pusta, koszt 0" << endl;
+	else
+	{
+		cout << "Dojscie do wierzcholka " << podKonc << ": ";
+		for(int i = 0; i < wierzcholek; i++)
+		{
+			
+		}
+		cout << ", koszt " << dojscie[podKonc] << endl;
+	}
+	cin.get();
+	cin.get();
+	delete[] dojscie;
+	delete[] poprzednik;
+	delete[] QS;
 }
 
 bool GrafListy::czySpojny(int wklStart)
@@ -137,13 +168,12 @@ bool GrafListy::czySpojny(int wklStart)
 	odwiedzone[wklStart] = true;
 	kopiec.push(wklStart);
 	int licznik = 0;
-	Node *p = nullptr;
 	while (!kopiec.isEmpty())
 	{
 		wklStart = kopiec.getRoot();
 		kopiec.pop();
 
-		for (p = grafNS[wklStart].getHead(); ;)
+		for (Node *p = grafNS[wklStart].getHead(); ;)
 		{
 			if (odwiedzone[p->data] == false) {
 				kopiec.push(p->data);
@@ -161,13 +191,11 @@ bool GrafListy::czySpojny(int wklStart)
 		
 		if (licznik == wierzcholek)
 		{
-			delete p;
 			delete[] odwiedzone;
 			return true;
 		}
 	}
 
-	delete p;
 	delete[] odwiedzone;
 	return false;
 }

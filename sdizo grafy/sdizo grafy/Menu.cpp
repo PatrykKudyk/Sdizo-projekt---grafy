@@ -60,7 +60,7 @@ void Menu::menuGlowne()
 {
 	bool dzialanie = true;
 	bool spojnosc;
-	int wybor, wierzcholki, gestosc;
+	int wybor, wierzcholki, gestosc, w1, w2;
 	do {
 		system("cls");
 		cout << "[1] Wczytaj dane z pliku." << endl
@@ -115,6 +115,12 @@ void Menu::menuGlowne()
 			grafM.wypisz();
 			break;
 		case 4:
+			system("cls");
+			cout << "Podaj wierzcholek poczatkowy:\t";
+			cin >> w1;
+			cout << "Podaj wierzcholek koncowy:\t";
+			cin >> w2;
+			grafL.dijkstra(w1, w2);
 			break;
 		case 5:
 			break;
