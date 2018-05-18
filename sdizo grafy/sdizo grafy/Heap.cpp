@@ -64,9 +64,6 @@ void Heap::pop()
 		}
 		arr[i] = v;
 	}
-	cout << "Zrobione!" << endl;
-	cin.get();
-	cin.get();
 	system("cls");
 }
 

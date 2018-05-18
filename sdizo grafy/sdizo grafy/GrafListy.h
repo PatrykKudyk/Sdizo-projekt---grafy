@@ -12,7 +12,6 @@ public:
 	void createRandom();
 	void createGiven();
 	bool czySpojny(int wklStart);
-	void DFS(int wierzcholek);
 	void wypisz();
 	void clearGraf();
 };

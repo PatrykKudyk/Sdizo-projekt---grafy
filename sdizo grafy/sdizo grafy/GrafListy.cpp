@@ -33,11 +33,11 @@ void GrafListy::createRandom()
 		grafS[i] = p1;
 		grafNS[i] = p2;
 	}
-	for (int i = 0; i < wierzcholek; i++)		//przypisuje wszystkim komorkom wartosc poczatkowa 0,0
+	/*for (int i = 0; i < wierzcholek; i++)		//przypisuje wszystkim komorkom wartosc poczatkowa 0,0
 	{
 		grafS[i].push(0, 0);
 		grafNS[i].push(0, 0);
-	}
+	}*/
 	while (!plik.eof())
 	{
 		plik >> wp >> wk >> waga;
@@ -89,23 +89,40 @@ bool GrafListy::czySpojny(int wklStart)
 	bool *odwiedzone = new bool[wierzcholek];
 	for (int i = 0; i < wierzcholek; i++)
 		odwiedzone[i] = false;
-
 	Heap kopiec;
 	odwiedzone[wklStart] = true;
 	kopiec.push(wklStart);
-
-	while(!kopiec.isEmpty())
+	int licznik = 0;
+	while (!kopiec.isEmpty())
 	{
-		wklStart = 
+		wklStart = kopiec.getRoot();
+		kopiec.pop();
+
+		for (Node *p = grafNS[wklStart].getHead(); ;)
+		{
+			if (odwiedzone[p->data] == false) {
+				kopiec.push(p->data);
+				odwiedzone[p->data] = true;
+			}
+			if (p->next == nullptr)
+				break;
+			p = p->next;
+		}
+
+		licznik = 0;
+		for (int i = 0; i < wierzcholek; i++)
+			if (odwiedzone[i] == true)
+				licznik++;
+		
+		if (licznik == wierzcholek)
+		{
+			delete[] odwiedzone;
+			return true;
+		}
 	}
 
-
-	return ;
-}
-
-void GrafListy::DFS(int wierzcholek)
-{
-
+	delete[] odwiedzone;
+	return false;
 }
 
 void GrafListy::wypisz()
@@ -128,6 +145,8 @@ void GrafListy::wypisz()
 			do
 			{
 				cout << "[" << p->data << " /" << p->waga << "]\t";
+				if (p->next == nullptr)
+					break;
 				p = p->next;
 			} while (p->next);
 			cout << endl;
@@ -146,6 +165,8 @@ void GrafListy::wypisz()
 			do
 			{
 				cout << "[" << p->data << " /" << p->waga << "]\t";
+				if (p->next == nullptr)
+					break;
 				p = p->next;
 			} while (p->next);
 			cout << endl;

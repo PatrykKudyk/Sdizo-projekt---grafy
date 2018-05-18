@@ -59,7 +59,7 @@ void Menu::genRand(int wierzcholki, int gestosc)
 void Menu::menuGlowne()
 {
 	bool dzialanie = true;
-	bool niespojnosc = false;
+	bool spojnosc = false;
 	int wybor, wierzcholki, gestosc;
 	do {
 		system("cls");
@@ -85,12 +85,12 @@ void Menu::menuGlowne()
 			cin >> wierzcholki;
 			cout << "Podaj gestosc grafu (w procentach):\t";
 			cin >> gestosc;
-			//do 
-			//{
+			do 
+			{
 				genRand(wierzcholki, gestosc);
 				grafL.createRandom();
-			//	niespojnosc = grafL.czySpojny();
-			//} while (niespojnosc);
+				spojnosc = grafL.czySpojny(0);
+			} while (spojnosc != true);
 			grafM.createRandom();
 			cout << "Zrobione!" << endl;
 			cin.get();
