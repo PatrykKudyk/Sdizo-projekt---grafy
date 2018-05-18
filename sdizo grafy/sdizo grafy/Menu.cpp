@@ -59,7 +59,7 @@ void Menu::genRand(int wierzcholki, int gestosc)
 void Menu::menuGlowne()
 {
 	bool dzialanie = true;
-	bool spojnosc = false;
+	bool spojnosc;
 	int wybor, wierzcholki, gestosc;
 	do {
 		system("cls");
@@ -73,8 +73,19 @@ void Menu::menuGlowne()
 		switch (wybor)
 		{
 		case 1:
+			do
+			{
+				grafL.createGiven();
+				spojnosc = grafL.czySpojny(0);
+				if(!spojnosc)
+				{
+					cout << "Podany przez ciebie graf jest niespojny!" << endl
+						<< "Podaj nowy, a nastepnie nacisnij dowolny przycisk." << endl;
+					cin.get();
+					cin.get();
+				}
+			} while (!spojnosc);
 			grafM.createGiven();
-			grafL.createGiven();
 			cout << "Zrobione!" << endl;
 			cin.get();
 			cin.get();
@@ -90,7 +101,7 @@ void Menu::menuGlowne()
 				genRand(wierzcholki, gestosc);
 				grafL.createRandom();
 				spojnosc = grafL.czySpojny(0);
-			} while (spojnosc != true);
+			} while (!spojnosc);
 			grafM.createRandom();
 			cout << "Zrobione!" << endl;
 			cin.get();
