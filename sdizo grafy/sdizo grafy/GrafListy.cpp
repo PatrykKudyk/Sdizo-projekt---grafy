@@ -1,6 +1,7 @@
 #include "GrafListy.h"
 #include <fstream>
 #include <iostream>
+#include "Heap.h"
 
 using namespace std;
 
@@ -87,10 +88,15 @@ void GrafListy::createGiven()
 bool GrafListy::czySpojny()
 {
 	bool spojny = false;
-
+	Heap kopiec;
 
 
 	return spojny;
+}
+
+void GrafListy::DFS(int wierzcholek)
+{
+
 }
 
 void GrafListy::wypisz()
@@ -106,8 +112,8 @@ void GrafListy::wypisz()
 	{
 		p = grafS[i].getHead();
 		cout << "Graf[" << i << "] - ";
-		if (p == nullptr)
-			cout << "brak" << endl;
+		if (p == 0)
+			cout << "brak krawedzi" << endl;
 		else
 		{
 			do
@@ -124,12 +130,17 @@ void GrafListy::wypisz()
 	{
 		p = grafNS[i].getHead();
 		cout << "Graf[" << i << "] - ";
-		do
+		if (p == 0)
+			cout << "brak krawedzi" << endl;
+		else
 		{
-			cout << "[" << p->data << " /" << p->waga << "]\t";
-			p = p->next;
-		} while (p->next);
-		cout << endl;
+			do
+			{
+				cout << "[" << p->data << " /" << p->waga << "]\t";
+				p = p->next;
+			} while (p->next);
+			cout << endl;
+		}
 	}
 }
 
@@ -142,4 +153,5 @@ void GrafListy::clearGraf()
 	for (int i = 0; i < wierzcholek; i++)
 		grafNS->clearList();
 	delete[] grafNS;
+	//delete[] odwiedzone;
 }

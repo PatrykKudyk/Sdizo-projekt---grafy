@@ -39,8 +39,8 @@ void GrafMacierz::createRandom()
 		plik >> wp >> wk >> waga;
 		grafS[wp][licznik] = 1;
 		grafS[wk][licznik] = -1;
-		grafS[wp][licznik] = 1;
-		grafS[wk][licznik] = 1;
+		grafNS[wp][licznik] = 1;
+		grafNS[wk][licznik] = 1;
 		wagi[licznik] = waga;
 		licznik++;
 	}
@@ -73,8 +73,8 @@ void GrafMacierz::createGiven()
 		plik >> wp >> wk >> waga;
 		grafS[wp][licznik] = 1;
 		grafS[wk][licznik] = -1;
-		grafS[wp][licznik] = 1;
-		grafS[wk][licznik] = 1;
+		grafNS[wp][licznik] = 1;
+		grafNS[wk][licznik] = 1;
 		wagi[licznik] = waga;
 		licznik++;
 	}
@@ -117,14 +117,21 @@ void GrafMacierz::wypisz()
 				cout << "~";
 		cout << endl;
 	}
-	cout << "Wagi krawedzi:\n";
+	cout << "\t\t\tWAGI KRAWEDZI\n";
 	for (int i = 0; i < krawedz; i++)
+	{
+		if (i == 0)
+			cout << "Numer Krawedzi:\t";
 		cout << i << "\t";
+	}
 	cout << endl;
 	for (int i = 0; i < krawedz; i++)
+	{
+		if (i == 0)
+			cout << "Waga Krawedzi:\t";
 		cout << wagi[i] << "\t";
-	
-	cout << endl << "----------NIESKIEROWANY----------" << endl;
+	}
+	cout << "\n\n----------NIESKIEROWANY----------" << endl;
 
 	for (int i = 0; i < wierzcholek; i++)
 	{
@@ -154,12 +161,20 @@ void GrafMacierz::wypisz()
 				cout << "~";
 		cout << endl;
 	}
-	cout << "Wagi krawedzi:\n";
+	cout << "\t\t\tWAGI KRAWEDZI\n";
 	for (int i = 0; i < krawedz; i++)
+	{
+		if (i == 0)
+			cout << "Numer Krawedzi:\t";
 		cout << i << "\t";
+	}
 	cout << endl;
 	for (int i = 0; i < krawedz; i++)
+	{
+		if (i == 0)
+			cout << "Waga Krawedzi:\t";
 		cout << wagi[i] << "\t";
+	}
 	cout << endl;
 	cin.get();
 	cin.get();

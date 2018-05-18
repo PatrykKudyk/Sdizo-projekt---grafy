@@ -18,14 +18,27 @@ Menu::~Menu()
 void Menu::genRand(int wierzcholki, int gestosc)
 {
 	srand(time(NULL));
-	fstream plik;
+	ofstream plik;
 	int krawedzie = ((gestosc*wierzcholki*(wierzcholki - 1)) / 200); // dzielimy przez 200, bo uwzgledniamy procentowosc gestoci (100) i (2), ktore jest podane we wzorze [2*100 = 200]
 
-	plik.open("randomowe.txt", ios::out);
+	plik.open("randomowe.txt", ios::out| ios::trunc);
 	for (int i = 0, w1, w2; i <= krawedzie; i++)
 	{
 		if (i == 0)
 			plik << krawedzie << " " << wierzcholki << endl;
+		else if (i > 0 && i <= wierzcholki)
+		{
+			do
+			{
+				w1 = i - 1;
+				w2 = rand() % wierzcholki;
+			} while (w1 == w2);
+
+			if (i == krawedzie)
+				plik << w1 << " " << w2 << " " << (rand() % 5000) + 1;
+			else
+				plik << w1 << " " << w2 << " " << (rand() % 5000) + 1 << endl;
+		}
 		else
 		{
 			do
@@ -34,7 +47,10 @@ void Menu::genRand(int wierzcholki, int gestosc)
 				w2 = rand() % wierzcholki;
 			} while (w1 == w2);
 
-			plik << w1 << " " << w2 << " " << (rand() % 1000) + 1 << endl;
+			if(i == krawedzie)
+				plik << w1 << " " << w2 << " " << (rand() % 5000) + 1;
+			else 
+				plik << w1 << " " << w2 << " " << (rand() % 5000) + 1 << endl;
 		}
 	}
 	plik.close();
@@ -43,6 +59,7 @@ void Menu::genRand(int wierzcholki, int gestosc)
 void Menu::menuGlowne()
 {
 	bool dzialanie = true;
+	bool niespojnosc = false;
 	int wybor, wierzcholki, gestosc;
 	do {
 		system("cls");
@@ -68,9 +85,13 @@ void Menu::menuGlowne()
 			cin >> wierzcholki;
 			cout << "Podaj gestosc grafu (w procentach):\t";
 			cin >> gestosc;
-			genRand(wierzcholki, gestosc);
+			//do 
+			//{
+				genRand(wierzcholki, gestosc);
+				grafL.createRandom();
+			//	niespojnosc = grafL.czySpojny();
+			//} while (niespojnosc);
 			grafM.createRandom();
-			grafL.createRandom();
 			cout << "Zrobione!" << endl;
 			cin.get();
 			cin.get();
