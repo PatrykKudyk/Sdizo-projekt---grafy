@@ -11,6 +11,7 @@ public:
 	~GrafListy();
 	void createRandom();
 	void createGiven();
+	void dijkstra(int podPocz, int podKonc);
 	bool czySpojny(int wklStart);
 	void wypisz();
 	void clearGraf();

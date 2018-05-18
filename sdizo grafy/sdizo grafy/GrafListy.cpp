@@ -84,6 +84,50 @@ void GrafListy::createGiven()
 	plik.close();
 }
 
+void GrafListy::dijkstra(int podPocz, int podKonc)
+{
+	bool niepustyQ;
+	int *dojscie = new int[wierzcholek];		//tablica z kosztami dojscia
+	int *poprzednik = new int[wierzcholek];		//tablica poprzednikow na sciezkach
+	bool *QS = new bool[wierzcholek];			//tablica logiczna okreslajaca polozenie wierzcholka false ----> Q    true ----> S
+
+	for (int i = 0; i < wierzcholek; i++)
+		QS[i] = false;							//wrzucamy wszystkie wierzcholki do tablicy Q (ustawiamy false)
+
+	for (int i = 0; i < wierzcholek; i++)
+		dojscie[i] = INT_MAX;					//ustawiamy wszystkie wartosci dojscia na maksymalna wartosc dla inta
+	dojscie[podPocz] = -1;						//dla naszego wierzcholka poczatkowego ustawiamy wartosc -1
+
+	for (int i = 0; i < wierzcholek; i++)
+		poprzednik[i] = -1;						//tablice poprzednikow wypelniamy wartosciami -1
+	
+	int najmniejszeD = dojscie[0];				//ustawiamy losowa wartosc
+	int numPom = NULL;
+	Node *p = nullptr;
+
+	do
+	{
+		niepustyQ = false;
+
+		for (int i = 0; i < wierzcholek; i++)
+			if (QS[i] == false)
+				if (dojscie[i] < najmniejszeD)
+				{				
+					najmniejszeD = dojscie[i];
+					numPom = i;
+				}
+		QS[numPom] = true;						//przeniesienie wierzcholka o najmniejszym koszcie dojscia do zbioru S
+		for(p = grafS[numPom].getHead();)
+		
+		
+
+		for (int i = 0; i < wierzcholek; i++)	//sprawdzamy czy zbior Q posiada jakies elementy
+			if (QS[i] == false)
+				niepustyQ = true;
+
+	} while (niepustyQ);
+}
+
 bool GrafListy::czySpojny(int wklStart)
 {
 	bool *odwiedzone = new bool[wierzcholek];
@@ -93,12 +137,13 @@ bool GrafListy::czySpojny(int wklStart)
 	odwiedzone[wklStart] = true;
 	kopiec.push(wklStart);
 	int licznik = 0;
+	Node *p = nullptr;
 	while (!kopiec.isEmpty())
 	{
 		wklStart = kopiec.getRoot();
 		kopiec.pop();
 
-		for (Node *p = grafNS[wklStart].getHead(); ;)
+		for (p = grafNS[wklStart].getHead(); ;)
 		{
 			if (odwiedzone[p->data] == false) {
 				kopiec.push(p->data);
@@ -116,11 +161,13 @@ bool GrafListy::czySpojny(int wklStart)
 		
 		if (licznik == wierzcholek)
 		{
+			delete p;
 			delete[] odwiedzone;
 			return true;
 		}
 	}
 
+	delete p;
 	delete[] odwiedzone;
 	return false;
 }

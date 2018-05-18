@@ -66,7 +66,7 @@ void Menu::menuGlowne()
 		cout << "[1] Wczytaj dane z pliku." << endl
 			<< "[2] Wygeneruj graf losowo." << endl
 			<< "[3] Wyswietl graf listowo i macierzowo na ekranie." << endl
-			<< "[4] Algorytm 1 (np. Prima) macierzowo i listowo z wyswietleniem wynikow." << endl
+			<< "[4] Algorytm 1 - Dijkstry" << endl
 			<< "[5] Algorytm 2 (np. Kruskala) macierzowo i listowo z wyswietleniem wynikow." << endl
 			<< "[6] Wyjdz z programu." << endl;
 		cin >> wybor;
