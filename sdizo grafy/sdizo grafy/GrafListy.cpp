@@ -158,8 +158,6 @@ void GrafListy::dijkstra(int podPocz, int podKonc)
 		};
 		cout << podKonc << ", koszt " << dojscie[podKonc] << endl;
 	}
-	cin.get();
-	cin.get();
 	delete[] dojscie;
 	delete[] poprzednik;
 	delete[] QS;

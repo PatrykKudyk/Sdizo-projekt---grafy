@@ -146,7 +146,12 @@ void Menu::menuDijkstra()
 			cin >> w1;
 			cout << "Podaj wierzcholek koncowy:\t";
 			cin >> w2;
+			cout << endl << "Listowo:" << endl;
 			grafL.dijkstra(w1, w2);
+			cout << endl << "Macierzowo:" << endl;
+			grafM.dijkstra(w1, w2);
+			cin.get();
+			cin.get();
 			break;
 		case 2:
 			dzialanie = false;

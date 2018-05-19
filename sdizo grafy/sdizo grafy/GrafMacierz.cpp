@@ -101,6 +101,86 @@ void GrafMacierz::createGiven()
 	plik.close();
 }
 
+void GrafMacierz::dijkstra(int podPocz, int podKonc)
+{
+	bool niepustyQ;
+	int najmniejszeD, numPom;
+	int *dojscie = new int[wierzcholek];		//tablica z kosztami dojscia
+	int *poprzednik = new int[wierzcholek];		//tablica poprzednikow na sciezkach
+	bool *QS = new bool[wierzcholek];			//tablica logiczna okreslajaca polozenie wierzcholka false ----> Q    true ----> S
+
+	for (int i = 0; i < wierzcholek; i++)
+		QS[i] = false;							//wrzucamy wszystkie wierzcholki do tablicy Q (ustawiamy false)
+
+	for (int i = 0; i < wierzcholek; i++)
+		dojscie[i] = INT_MAX;					//ustawiamy wszystkie wartosci dojscia na maksymalna wartosc dla inta
+	dojscie[podPocz] = 0;						//dla naszego wierzcholka poczatkowego ustawiamy wartosc 0
+
+	for (int i = 0; i < wierzcholek; i++)
+		poprzednik[i] = -1;						//tablice poprzednikow wypelniamy wartosciami -1
+
+	do
+	{
+		numPom = -200;
+		niepustyQ = false;
+		najmniejszeD = INT_MAX;
+
+		for (int i = 0; i < wierzcholek; i++)
+			if (QS[i] == false)
+				if (dojscie[i] < najmniejszeD)
+				{
+					najmniejszeD = dojscie[i];
+					numPom = i;
+				}
+		if (numPom != -200)
+		{
+			QS[numPom] = true;						//przeniesienie wierzcholka o najmniejszym koszcie dojscia do zbioru S
+			for (int i = 0; i < krawedz; i++)
+			{
+				if (grafS[numPom][i] == 1)
+				{
+					if (QS[grafS[numPom][i]] == false)
+					{
+						if (dojscie[grafS[numPom][i]] > (dojscie[numPom] + wagi[i]))
+						{
+							dojscie[grafS[numPom][i]] = (dojscie[numPom] + wagi[i]);
+							poprzednik[grafS[numPom][i]] = numPom;
+						}
+					}
+				}
+			}
+
+			for (int i = 0; i < wierzcholek; i++)	//sprawdzamy czy zbior Q posiada jakies elementy
+			{
+				if (QS[i] == false)
+					niepustyQ = true;
+			}
+		}
+		else
+			break;
+	} while (niepustyQ);
+
+	if (podPocz == podKonc)
+		cout << "Sciezka pusta, koszt 0" << endl;
+	else if (dojscie[podKonc] == INT_MAX)
+		cout << "Dojscie do wierzcholka " << podKonc << " jest niemozliwe.";
+	else
+	{
+		numPom = podKonc;
+		cout << "Dojscie do wierzcholka " << podKonc << ": " << podPocz << "->";
+		while (poprzednik[numPom] != podPocz && poprzednik[numPom] != -1)
+		{
+			numPom = poprzednik[numPom];
+			cout << numPom << "->";
+		};
+		cout << podKonc << ", koszt " << dojscie[podKonc] << endl;
+	}
+	delete[] dojscie;
+	delete[] poprzednik;
+	delete[] QS;
+
+}
+
 void GrafMacierz::wypisz()
 {
 	cout << "Dane Twojego grafu:" << endl
@@ -109,12 +189,12 @@ void GrafMacierz::wypisz()
 		<< "Gestosc: " << gestosc << "%" << endl
 		<< "Twoj graf w postaci tabeli:" << endl
 		<< "----------SKIEROWANY----------" << endl;
-	for(int i = 0; i < wierzcholek; i++)
+	for (int i = 0; i < wierzcholek; i++)
 	{
 		if (i == 0)
 		{
 			cout << "\t";
-			for (int m = 0; m < krawedz ; m++)
+			for (int m = 0; m < krawedz; m++)
 			{
 				cout << m << "\t";
 			}
@@ -129,8 +209,8 @@ void GrafMacierz::wypisz()
 			cout << grafS[i][j] << "\t";					//wypisywanie wartosci z macierzy
 		}
 		cout << endl;
-		if(i%2 == 1)
-			for(int ilosc = 0; ilosc < krawedz*8 ; ilosc++)		//co drugi wiersz oddzielony jest ciagiem: "----(...)--"
+		if (i % 2 == 1)
+			for (int ilosc = 0; ilosc < krawedz * 8; ilosc++)		//co drugi wiersz oddzielony jest ciagiem: "----(...)--"
 				cout << "-";
 		else
 			for (int ilosc = 0; ilosc < krawedz * 8; ilosc++)	//co drugi wiersz oddzielony jest ciagiem: "~~~~(...)~~"
@@ -202,8 +282,8 @@ void GrafMacierz::wypisz()
 
 void GrafMacierz::clearMacierz()
 {
-	for (int i = 0; i < wierzcholek; i++) 
-			delete[] grafS[i];
+	for (int i = 0; i < wierzcholek; i++)
+		delete[] grafS[i];
 	delete[] grafS;
 	for (int i = 0; i < wierzcholek; i++)
 		delete[] grafNS[i];

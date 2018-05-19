@@ -11,6 +11,7 @@ public:
 	~GrafMacierz();
 	void createRandom();
 	void createGiven();
+	void dijkstra(int podPocz, int podKonc);
 	void wypisz();
 	void clearMacierz();
 };
