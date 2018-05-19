@@ -87,6 +87,7 @@ void GrafListy::createGiven()
 void GrafListy::dijkstra(int podPocz, int podKonc)
 {
 	bool niepustyQ;
+	int najmniejszeD, numPom;
 	int *dojscie = new int[wierzcholek];		//tablica z kosztami dojscia
 	int *poprzednik = new int[wierzcholek];		//tablica poprzednikow na sciezkach
 	bool *QS = new bool[wierzcholek];			//tablica logiczna okreslajaca polozenie wierzcholka false ----> Q    true ----> S
@@ -101,12 +102,9 @@ void GrafListy::dijkstra(int podPocz, int podKonc)
 	for (int i = 0; i < wierzcholek; i++)
 		poprzednik[i] = -1;						//tablice poprzednikow wypelniamy wartosciami -1
 
-	int najmniejszeD;				//ustawiamy losowa wartosc
-	int numPom = NULL;
-	
-
 	do
 	{
+		numPom = -1;
 		niepustyQ = false;
 		najmniejszeD = INT_MAX;
 		Node *p = nullptr;
@@ -117,32 +115,38 @@ void GrafListy::dijkstra(int podPocz, int podKonc)
 					najmniejszeD = dojscie[i];
 					numPom = i;
 				}
-		QS[numPom] = true;						//przeniesienie wierzcholka o najmniejszym koszcie dojscia do zbioru S
-		for (p = grafS[numPom].getHead();;)
+		if (numPom != -1) 
 		{
-			if (QS[p->data] == false)
-			{
-				if (dojscie[p->data] > (dojscie[numPom] + p->waga))
+			QS[numPom] = true;						//przeniesienie wierzcholka o najmniejszym koszcie dojscia do zbioru S
+				for (p = grafS[numPom].getHead();;)
 				{
-					dojscie[p->data] = (dojscie[numPom] + p->waga);
-					poprzednik[p->data] = numPom;
+					if (QS[p->data] == false)
+					{
+						if (dojscie[p->data] > (dojscie[numPom] + p->waga))
+						{
+							dojscie[p->data] = (dojscie[numPom] + p->waga);
+							poprzednik[p->data] = numPom;
+						}
+					}
+					if (p->next == nullptr)
+						break;
+					p = p->next;
 				}
-			}
-			if (p->next == nullptr)
-				break;
-			p = p->next;
-		}
-
+		
 		for (int i = 0; i < wierzcholek; i++)	//sprawdzamy czy zbior Q posiada jakies elementy
 		{
 			if (QS[i] == false)
 				niepustyQ = true;
 		}		
-
+		}
+		else
+			break;
 	} while (niepustyQ);
 
 	if (podPocz == podKonc)
 		cout << "Sciezka pusta, koszt 0" << endl;
+	else if (dojscie[podKonc] == INT_MAX)
+		cout << "Dojscie do wierzcholka " << podKonc << " jest niemozliwe.";
 	else
 	{
 		cout << "Dojscie do wierzcholka " << podKonc << ": ";

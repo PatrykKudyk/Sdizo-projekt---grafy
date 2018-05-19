@@ -60,7 +60,7 @@ void Menu::menuGlowne()
 {
 	bool dzialanie = true;
 	bool spojnosc;
-	int wybor, wierzcholki, gestosc, w1, w2;
+	int wybor, wierzcholki, gestosc;
 	do {
 		system("cls");
 		cout << "[1] Wczytaj dane z pliku." << endl
@@ -115,12 +115,7 @@ void Menu::menuGlowne()
 			grafM.wypisz();
 			break;
 		case 4:
-			system("cls");
-			cout << "Podaj wierzcholek poczatkowy:\t";
-			cin >> w1;
-			cout << "Podaj wierzcholek koncowy:\t";
-			cin >> w2;
-			grafL.dijkstra(w1, w2);
+			menuDijkstra();
 			break;
 		case 5:
 			break;
@@ -128,6 +123,38 @@ void Menu::menuGlowne()
 			dzialanie = false;
 			break;
 		default:
+			break;
+		}
+	} while (dzialanie);
+}
+
+void Menu::menuDijkstra()
+{
+	int w1, w2, wybor;
+	bool dzialanie = true;
+	do {
+		system("cls");
+		cout << "\t\t\tAlgorytm Dijkstry" << endl
+			<< "\t\tCo chcialbys teraz zrobic?" << endl
+			<< "[1] Sprawdzic Najkrotsza sciezke pomiedzy dwoma wierzcholkami." << endl
+			<< "[2] Wrocic do menu glownego." << endl;
+		cin >> wybor;
+		switch(wybor)
+		{
+		case 1:
+			cout << "Podaj wierzcholek poczatkowy:\t";
+			cin >> w1;
+			cout << "Podaj wierzcholek koncowy:\t";
+			cin >> w2;
+			grafL.dijkstra(w1, w2);
+			break;
+		case 2:
+			dzialanie = false;
+			break;
+		default:
+			cout << "Wprowadziles liczbe z poza zakresu!" << endl;
+			cin.get();
+			cin.get();
 			break;
 		}
 	} while (dzialanie);

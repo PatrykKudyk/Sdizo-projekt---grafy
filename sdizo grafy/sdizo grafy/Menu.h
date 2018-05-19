@@ -12,6 +12,6 @@ public:
 	~Menu();
 	void genRand(int wierzcholki, int gestosc);
 	void menuGlowne();
-
+	void menuDijkstra();
 };
 
