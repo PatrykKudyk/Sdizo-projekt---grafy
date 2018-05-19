@@ -104,7 +104,7 @@ void GrafListy::dijkstra(int podPocz, int podKonc)
 
 	do
 	{
-		numPom = -1;
+		numPom = -200;
 		niepustyQ = false;
 		najmniejszeD = INT_MAX;
 		Node *p = nullptr;
@@ -115,7 +115,7 @@ void GrafListy::dijkstra(int podPocz, int podKonc)
 					najmniejszeD = dojscie[i];
 					numPom = i;
 				}
-		if (numPom != -1) 
+		if (numPom != -200) 
 		{
 			QS[numPom] = true;						//przeniesienie wierzcholka o najmniejszym koszcie dojscia do zbioru S
 				for (p = grafS[numPom].getHead();;)
@@ -149,12 +149,14 @@ void GrafListy::dijkstra(int podPocz, int podKonc)
 		cout << "Dojscie do wierzcholka " << podKonc << " jest niemozliwe.";
 	else
 	{
-		cout << "Dojscie do wierzcholka " << podKonc << ": ";
-		for(int i = 0; i < wierzcholek; i++)
+		numPom = podKonc;
+		cout << "Dojscie do wierzcholka " << podKonc << ": " << podPocz << "->";
+		while (poprzednik[numPom] != podPocz && poprzednik[numPom] != -1)
 		{
-			
-		}
-		cout << ", koszt " << dojscie[podKonc] << endl;
+			numPom = poprzednik[numPom];
+			cout << numPom << "->";
+		};
+		cout << podKonc << ", koszt " << dojscie[podKonc] << endl;
 	}
 	cin.get();
 	cin.get();
