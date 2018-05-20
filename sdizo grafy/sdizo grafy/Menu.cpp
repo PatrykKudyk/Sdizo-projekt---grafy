@@ -185,7 +185,7 @@ void Menu::menuPrim()
 			cout << endl << "Listowo:" << endl;
 			grafL.prim();
 			cout << endl << "Macierzowo:" << endl;
-
+			grafM.prim();
 			cin.get();
 			cin.get();
 			break;

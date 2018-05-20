@@ -1,6 +1,7 @@
 #include "GrafMacierz.h"
 #include <iostream>
 #include <fstream>
+#include "HeapMin.h"
 
 using namespace std;
 
@@ -185,6 +186,55 @@ void GrafMacierz::dijkstra(int podPocz, int podKonc)
 	delete[] poprzednik;
 	delete[] QS;
 
+}
+
+void GrafMacierz::prim()
+{
+	HeapMin	kolejka;			//kolejka priorytetowa
+	bool *odwiedzone = new bool[wierzcholek];
+	for (int i = 0; i < wierzcholek; i++)
+		odwiedzone[i] = false;
+	Krawedz *zbiorKrawedzi = new Krawedz[wierzcholek - 1];
+	int wPom = 0;
+	odwiedzone[wPom] = true;		//0-wy wierzcholek odwiedzony
+	Krawedz kPom;
+	for (int i = 0; i < wierzcholek; i++)
+	{
+		for (int j = 0; j < krawedz; j++)
+		{	
+			if (grafNS[wPom][j] == 1)
+			{
+				for (int k = 0; k < wierzcholek; k++)
+				{
+					if (k != wPom && grafNS[k][j] == 1)
+					{
+						if (odwiedzone[k] == false)
+							kolejka.push(wPom, k, wagi[j]);
+					}
+				}
+			}
+			
+		}
+		if (!kolejka.isEmpty()) {
+			do {
+				kPom.waga = kolejka.getRoot().waga;
+				kPom.wPocz = kolejka.getRoot().wPocz;
+				kPom.wKonc = kolejka.getRoot().wKonc;
+				kolejka.pop();
+			} while (odwiedzone[kPom.wKonc]);
+
+			zbiorKrawedzi[i].waga = kPom.waga;
+			zbiorKrawedzi[i].wPocz = kPom.wPocz;
+			zbiorKrawedzi[i].wKonc = kPom.wKonc;
+			odwiedzone[kPom.wKonc] = true;
+			wPom = kPom.wKonc;
+		}
+	}
+	for (int i = 0; i < wierzcholek - 1; i++)
+		cout << zbiorKrawedzi[i].wPocz << "  " << zbiorKrawedzi[i].wKonc << "  " << zbiorKrawedzi[i].waga << endl;
+
+	delete[] odwiedzone;
+	delete[] zbiorKrawedzi;
 }
 
 void GrafMacierz::wypisz()

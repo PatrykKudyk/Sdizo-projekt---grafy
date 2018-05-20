@@ -12,6 +12,7 @@ public:
 	void createRandom();
 	void createGiven();
 	void dijkstra(int podPocz, int podKonc);
+	void prim();
 	void wypisz();
 	void clearMacierz();
 };
