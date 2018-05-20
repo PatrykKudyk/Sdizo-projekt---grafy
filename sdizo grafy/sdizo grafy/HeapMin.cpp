@@ -45,7 +45,7 @@ void HeapMin::pop()
 		arr = pom;
 		size = 0;
 	}
-	else
+	else if(size > 1)
 	{
 		arr[0].waga = arr[size - 1].waga;
 		arr[0].wPocz = arr[size - 1].wPocz;
@@ -85,7 +85,6 @@ void HeapMin::pop()
 		arr[i].wPocz = v.wPocz;
 		arr[i].wKonc = v.wKonc;
 	}
-	system("cls");
 }
 
 bool HeapMin::isEmpty()

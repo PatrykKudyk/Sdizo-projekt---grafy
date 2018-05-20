@@ -177,26 +177,30 @@ void GrafListy::prim()
 	for(int i = 0; i < wierzcholek; i++)
 	{
 		Node *p;
-		for(p = grafNS[wPom].getHead(); p == nullptr; p = p->next)
+		for (p = grafNS[wPom].getHead(); ; )
+		{
 			if (odwiedzone[p->data] == false)
-				kolejka.push(wPom, p->data, p->data);
+				kolejka.push(wPom, p->data, p->waga);
+			p = p->next;
+			if (p == nullptr)
+				break;
+		}
+		if (!kolejka.isEmpty()) {
+			do {
+				kPom.waga = kolejka.getRoot().waga;
+				kPom.wPocz = kolejka.getRoot().wPocz;
+				kPom.wKonc = kolejka.getRoot().wKonc;
+				kolejka.pop();
+			} while (odwiedzone[kPom.wKonc]);
 
-		do {
-			kPom.waga = kolejka.getRoot().waga;
-			kPom.wPocz = kolejka.getRoot().wPocz;
-			kPom.wKonc = kolejka.getRoot().wKonc;
-			kolejka.pop();
-		} while (odwiedzone[kPom.wKonc]);
-		zbiorKrawedzi[i].waga = kPom.waga;
-		zbiorKrawedzi[i].wPocz = kPom.wPocz;
-		zbiorKrawedzi[i].wKonc = kPom.wKonc;
-		odwiedzone[kPom.wKonc] = true;
-		wPom = kPom.wKonc;
+			zbiorKrawedzi[i].waga = kPom.waga;
+			zbiorKrawedzi[i].wPocz = kPom.wPocz;
+			zbiorKrawedzi[i].wKonc = kPom.wKonc;
+			odwiedzone[kPom.wKonc] = true;
+			wPom = kPom.wKonc;
+		}
 		delete p;
 	}
-
-	cout << "Minimalne drzewo rozpinajace dla Twojego grafu to: " << endl
-		<< "(Wierzcholek Poczatkowy)    (Wierzcholek Koncowy)    (Waga)" << endl;
 	for (int i = 0; i < wierzcholek - 1; i++)
 		cout << zbiorKrawedzi[i].wPocz << "  " << zbiorKrawedzi[i].wKonc << "  " << zbiorKrawedzi[i].waga << endl;
 
@@ -265,10 +269,8 @@ void GrafListy::wypisz()
 			do
 			{
 				cout << "[" << p->data << " /" << p->waga << "]\t";
-				if (p->next == nullptr)
-					break;
 				p = p->next;
-			} while (p->next);
+			} while (p != nullptr);
 			cout << endl;
 		}
 	}
@@ -285,10 +287,8 @@ void GrafListy::wypisz()
 			do
 			{
 				cout << "[" << p->data << " /" << p->waga << "]\t";
-				if (p->next == nullptr)
-					break;
 				p = p->next;
-			} while (p->next);
+			} while (p != nullptr);
 			cout << endl;
 		}
 	}

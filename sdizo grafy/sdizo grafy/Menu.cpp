@@ -67,7 +67,7 @@ void Menu::menuGlowne()
 			<< "[2] Wygeneruj graf losowo." << endl
 			<< "[3] Wyswietl graf listowo i macierzowo na ekranie." << endl
 			<< "[4] Algorytm 1 - Dijkstry" << endl
-			<< "[5] Algorytm 2 (np. Kruskala) macierzowo i listowo z wyswietleniem wynikow." << endl
+			<< "[5] Algorytm 2 - Prima" << endl
 			<< "[6] Wyjdz z programu." << endl;
 		cin >> wybor;
 		switch (wybor)
@@ -118,6 +118,7 @@ void Menu::menuGlowne()
 			menuDijkstra();
 			break;
 		case 5:
+			menuPrim();
 			break;
 		case 6:
 			dzialanie = false;
@@ -150,6 +151,41 @@ void Menu::menuDijkstra()
 			grafL.dijkstra(w1, w2);
 			cout << endl << "Macierzowo:" << endl;
 			grafM.dijkstra(w1, w2);
+			cin.get();
+			cin.get();
+			break;
+		case 2:
+			dzialanie = false;
+			break;
+		default:
+			cout << "Wprowadziles liczbe z poza zakresu!" << endl;
+			cin.get();
+			cin.get();
+			break;
+		}
+	} while (dzialanie);
+}
+
+void Menu::menuPrim()
+{
+	int wybor;
+	bool dzialanie = true;
+	do {
+		system("cls");
+		cout << "\t\t\tAlgorytm Prima" << endl
+			<< "\t\tCo chcialbys teraz zrobic?" << endl
+			<< "[1] Wyznaczyc Minimalne Drzewo Rozpinajace dla grafu." << endl
+			<< "[2] Wrocic do menu glownego." << endl;
+		cin >> wybor;
+		switch (wybor)
+		{
+		case 1:
+			cout << "Minimalne drzewo rozpinajace dla Twojego grafu to: " << endl
+				<< "(Wierzcholek Poczatkowy)    (Wierzcholek Koncowy)    (Waga)" << endl;
+			cout << endl << "Listowo:" << endl;
+			grafL.prim();
+			cout << endl << "Macierzowo:" << endl;
+
 			cin.get();
 			cin.get();
 			break;
