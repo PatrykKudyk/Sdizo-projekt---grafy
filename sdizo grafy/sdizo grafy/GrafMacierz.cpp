@@ -142,7 +142,7 @@ void GrafMacierz::dijkstra(int podPocz, int podKonc)
 				{
 					for (int j = 0; j < wierzcholek; j++)
 					{
-						if (grafS[j][i] == -1) 
+						if (grafS[j][i] == -1)
 						{
 							if (QS[j] == false)
 							{
@@ -174,13 +174,14 @@ void GrafMacierz::dijkstra(int podPocz, int podKonc)
 	else
 	{
 		numPom = podKonc;
-		cout << "Dojscie do wierzcholka " << podKonc << ": " << podPocz;
-		do 
+		cout << "Sciezka z wierzcholka " << podPocz << " do wierzcholka " << podKonc << " wyglada nastepujaco:" << endl << numPom << " ";
+
+		do
 		{
-			cout << "->" << numPom ;
 			numPom = poprzednik[numPom];
-		} while (poprzednik[numPom] != podPocz && poprzednik[numPom] != -1);
-		cout << ", koszt " << dojscie[podKonc] << endl;
+			cout << " <-- " << numPom;
+		} while (poprzednik[numPom] != -1);
+		cout << endl << "Koszt tego przejscia to: " << dojscie[podKonc] << endl;
 	}
 	delete[] dojscie;
 	delete[] poprzednik;
@@ -198,10 +199,10 @@ void GrafMacierz::prim()
 	int wPom = 0;
 	odwiedzone[wPom] = true;		//0-wy wierzcholek odwiedzony
 	Krawedz kPom;
-	for (int i = 0; i < wierzcholek; i++)
+	for (int i = 0; i < wierzcholek - 1; i++)
 	{
 		for (int j = 0; j < krawedz; j++)
-		{	
+		{
 			if (grafNS[wPom][j] == 1)
 			{
 				for (int k = 0; k < wierzcholek; k++)
@@ -213,7 +214,7 @@ void GrafMacierz::prim()
 					}
 				}
 			}
-			
+
 		}
 		if (!kolejka.isEmpty()) {
 			do {
@@ -231,7 +232,7 @@ void GrafMacierz::prim()
 		}
 	}
 	for (int i = 0; i < wierzcholek - 1; i++)
-		cout << zbiorKrawedzi[i].wPocz << "  " << zbiorKrawedzi[i].wKonc << "  " << zbiorKrawedzi[i].waga << endl;
+		cout << i+1 << ") " << zbiorKrawedzi[i].wPocz << "  " << zbiorKrawedzi[i].wKonc << "  " << zbiorKrawedzi[i].waga << endl;
 
 	delete[] odwiedzone;
 	delete[] zbiorKrawedzi;
