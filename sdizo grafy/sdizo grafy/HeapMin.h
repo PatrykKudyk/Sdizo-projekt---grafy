@@ -1,14 +1,22 @@
 #pragma once
 
+struct Krawedz
+{
+	int wPocz;
+	int wKonc;
+	int waga;
+};
+
+
 class HeapMin
 {
 	int size;
-	int *arr;
+	Krawedz *arr;
 public:
-	void push(int val);
+	void push(int wP, int wK, int waga);
 	void pop();
 	bool isEmpty();
-	int getRoot();
+	Krawedz getRoot();
 	void clearHeap();
 	HeapMin();
 	~HeapMin();

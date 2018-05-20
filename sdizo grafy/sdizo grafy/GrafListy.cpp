@@ -2,6 +2,7 @@
 #include <fstream>
 #include <iostream>
 #include "Heap.h"
+#include "HeapMin.h"
 
 using namespace std;
 
@@ -161,6 +162,46 @@ void GrafListy::dijkstra(int podPocz, int podKonc)
 	delete[] dojscie;
 	delete[] poprzednik;
 	delete[] QS;
+}
+
+void GrafListy::prim()
+{
+	HeapMin	kolejka;			//kolejka priorytetowa
+	bool *odwiedzone = new bool[wierzcholek];
+	for (int i = 0; i < wierzcholek; i++)
+		odwiedzone[i] = false;
+	Krawedz *zbiorKrawedzi = new Krawedz[wierzcholek-1];
+	int wPom = 0;
+	odwiedzone[wPom] = true;		//0-wy wierzcholek odwiedzony
+	Krawedz kPom;
+	for(int i = 0; i < wierzcholek; i++)
+	{
+		Node *p;
+		for(p = grafNS[wPom].getHead(); p == nullptr; p = p->next)
+			if (odwiedzone[p->data] == false)
+				kolejka.push(wPom, p->data, p->data);
+
+		do {
+			kPom.waga = kolejka.getRoot().waga;
+			kPom.wPocz = kolejka.getRoot().wPocz;
+			kPom.wKonc = kolejka.getRoot().wKonc;
+			kolejka.pop();
+		} while (odwiedzone[kPom.wKonc]);
+		zbiorKrawedzi[i].waga = kPom.waga;
+		zbiorKrawedzi[i].wPocz = kPom.wPocz;
+		zbiorKrawedzi[i].wKonc = kPom.wKonc;
+		odwiedzone[kPom.wKonc] = true;
+		wPom = kPom.wKonc;
+		delete p;
+	}
+
+	cout << "Minimalne drzewo rozpinajace dla Twojego grafu to: " << endl
+		<< "(Wierzcholek Poczatkowy)    (Wierzcholek Koncowy)    (Waga)" << endl;
+	for (int i = 0; i < wierzcholek - 1; i++)
+		cout << zbiorKrawedzi[i].wPocz << "  " << zbiorKrawedzi[i].wKonc << "  " << zbiorKrawedzi[i].waga << endl;
+
+	delete[] odwiedzone;
+	delete[] zbiorKrawedzi;
 }
 
 bool GrafListy::czySpojny(int wklStart)
