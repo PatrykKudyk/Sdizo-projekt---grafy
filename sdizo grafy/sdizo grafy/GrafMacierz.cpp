@@ -168,18 +168,18 @@ void GrafMacierz::dijkstra(int podPocz, int podKonc)
 
 	if (podPocz == podKonc)
 		cout << "Sciezka pusta, koszt 0" << endl;
-	else if (dojscie[podPocz] == INT_MAX)
+	else if (dojscie[podKonc] == INT_MAX)
 		cout << "Dojscie do wierzcholka " << podKonc << " jest niemozliwe.";
 	else
 	{
-		numPom = podPocz;
-		cout << "Dojscie do wierzcholka " << podKonc << ": " << podPocz << "->";
-		while (poprzednik[numPom] != podKonc && poprzednik[numPom] != -1)
+		numPom = podKonc;
+		cout << "Dojscie do wierzcholka " << podKonc << ": " << podPocz;
+		do 
 		{
+			cout << "->" << numPom ;
 			numPom = poprzednik[numPom];
-			cout << numPom << "->";
-		};
-		cout << podKonc << ", koszt " << dojscie[podKonc] << endl;
+		} while (poprzednik[numPom] != podPocz && poprzednik[numPom] != -1);
+		cout << ", koszt " << dojscie[podKonc] << endl;
 	}
 	delete[] dojscie;
 	delete[] poprzednik;
