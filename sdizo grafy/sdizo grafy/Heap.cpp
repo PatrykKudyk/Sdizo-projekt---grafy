@@ -80,29 +80,6 @@ int Heap::getRoot()
 	return arr[0];
 }
 
-void Heap::find(int val)
-{
-	int index;
-	bool found = false;
-
-	for (int i = 0; i < size; i++)
-		if (arr[i] == val)
-		{
-			found = true;
-			index = i;
-			break;
-		}
-	if (found)
-		cout << "Znalazlem zadana liczbe! (" << val << ")" << endl
-		<< "Znajduje sie ona pod indeksem : " << index << " z zakresu <0," << size - 1 << ">" << endl;
-	else
-		cout << "Niestety, ale nie udalo sie znalezc zadanej przez Ciebie liczby. (" << val << ")" << endl;
-
-	cin.get();
-	cin.get();
-	system("cls");
-}
-
 void Heap::clearHeap()
 {
 	if (size > 0)

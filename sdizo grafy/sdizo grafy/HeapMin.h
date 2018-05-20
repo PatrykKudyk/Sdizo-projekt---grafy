@@ -1,6 +1,6 @@
 #pragma once
 
-class Heap
+class HeapMin
 {
 	int size;
 	int *arr;
@@ -10,7 +10,6 @@ public:
 	bool isEmpty();
 	int getRoot();
 	void clearHeap();
-	Heap();
-	~Heap();
+	HeapMin();
+	~HeapMin();
 };
-

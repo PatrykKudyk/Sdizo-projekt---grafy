@@ -12,6 +12,7 @@ public:
 	void createRandom();
 	void createGiven();
 	void dijkstra(int podPocz, int podKonc);
+	void prim();
 	bool czySpojny(int wklStart);
 	void wypisz();
 	void clearGraf();
