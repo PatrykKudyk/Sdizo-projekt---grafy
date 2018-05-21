@@ -34,11 +34,6 @@ void GrafListy::createRandom()
 		grafS[i] = p1;
 		grafNS[i] = p2;
 	}
-	/*for (int i = 0; i < wierzcholek; i++)		//przypisuje wszystkim komorkom wartosc poczatkowa 0,0
-	{
-		grafS[i].push(0, 0);
-		grafNS[i].push(0, 0);
-	}*/
 	while (!plik.eof())
 	{
 		plik >> wp >> wk >> waga;
@@ -69,11 +64,6 @@ void GrafListy::createGiven()
 		grafS[i] = p1;
 		grafNS[i] = p2;
 	}
-	/*for (int i = 0; i < wierzcholek; i++)		//przypisuje wszystkim komorkom wartosc poczatkowa 0,0
-	{
-		grafS[i].push(0, 0);
-		grafNS[i].push(0, 0);
-	}*/
 	while (!plik.eof())
 	{
 		plik >> wp >> wk >> waga;
@@ -144,7 +134,7 @@ void GrafListy::dijkstra(int podPocz, int podKonc)
 			break;
 	} while (niepustyQ);
 
-	/*if (podPocz == podKonc)
+	if (podPocz == podKonc)
 		cout << "Sciezka pusta, koszt 0" << endl;
 	else if (dojscie[podKonc] == INT_MAX)
 		cout << "Dojscie do wierzcholka " << podKonc << " jest niemozliwe.";
@@ -159,7 +149,7 @@ void GrafListy::dijkstra(int podPocz, int podKonc)
 			cout << " <-- " << numPom;	
 		} while (poprzednik[numPom] != -1);
 		cout << endl << "Koszt tego przejscia to: " << dojscie[podKonc] << endl;
-	}*/
+	}
 	delete[] dojscie;
 	delete[] poprzednik;
 	delete[] QS;
@@ -203,8 +193,8 @@ void GrafListy::prim()
 		delete p;
 	}
 	kolejka.clearHeap();
-	//for (int i = 0; i < wierzcholek - 1; i++)
-	//	cout << i + 1 << ") " << zbiorKrawedzi[i].wPocz << "  " << zbiorKrawedzi[i].wKonc << "  " << zbiorKrawedzi[i].waga << endl;
+	for (int i = 0; i < wierzcholek - 1; i++)
+		cout << i + 1 << ") " << zbiorKrawedzi[i].wPocz << "  " << zbiorKrawedzi[i].wKonc << "  " << zbiorKrawedzi[i].waga << endl;
 	delete[] odwiedzone;
 	delete[] zbiorKrawedzi;
 }

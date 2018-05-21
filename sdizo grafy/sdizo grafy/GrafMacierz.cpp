@@ -166,7 +166,7 @@ void GrafMacierz::dijkstra(int podPocz, int podKonc)
 		else
 			break;
 	} while (niepustyQ);
-/*
+
 	if (podPocz == podKonc)
 		cout << "Sciezka pusta, koszt 0" << endl;
 	else if (dojscie[podKonc] == INT_MAX)
@@ -175,14 +175,13 @@ void GrafMacierz::dijkstra(int podPocz, int podKonc)
 	{
 		numPom = podKonc;
 		cout << "Sciezka z wierzcholka " << podPocz << " do wierzcholka " << podKonc << " wyglada nastepujaco:" << endl << numPom << " ";
-
 		do
 		{
 			numPom = poprzednik[numPom];
 			cout << " <-- " << numPom;
 		} while (poprzednik[numPom] != -1);
 		cout << endl << "Koszt tego przejscia to: " << dojscie[podKonc] << endl;
-	}*/
+	}
 	delete[] dojscie;
 	delete[] poprzednik;
 	delete[] QS;
@@ -231,9 +230,8 @@ void GrafMacierz::prim()
 			wPom = kPom.wKonc;
 		}
 	}
-	//for (int i = 0; i < wierzcholek - 1; i++)
-	//	cout << i+1 << ") " << zbiorKrawedzi[i].wPocz << "  " << zbiorKrawedzi[i].wKonc << "  " << zbiorKrawedzi[i].waga << endl;
-
+	for (int i = 0; i < wierzcholek - 1; i++)
+		cout << i+1 << ") " << zbiorKrawedzi[i].wPocz << "  " << zbiorKrawedzi[i].wKonc << "  " << zbiorKrawedzi[i].waga << endl;
 	delete[] odwiedzone;
 	delete[] zbiorKrawedzi;
 }

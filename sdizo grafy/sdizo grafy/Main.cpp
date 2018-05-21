@@ -8,8 +8,8 @@ using namespace std;
 int main()
 {
 	Menu menu;
-	//menu.menuGlowne();
-	GrafMacierz lista;
+	menu.menuGlowne();
+	/*GrafMacierz lista;
 	TimeMeasure time;
 	
 	vector<double> czasy;
@@ -325,6 +325,6 @@ int main()
 	czasy.clear();
 
 	cin.get();
-	cin.get();
+	cin.get();*/
 	exit(EXIT_SUCCESS);
 }
