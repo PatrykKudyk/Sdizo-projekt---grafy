@@ -144,7 +144,7 @@ void GrafListy::dijkstra(int podPocz, int podKonc)
 			break;
 	} while (niepustyQ);
 
-	if (podPocz == podKonc)
+	/*if (podPocz == podKonc)
 		cout << "Sciezka pusta, koszt 0" << endl;
 	else if (dojscie[podKonc] == INT_MAX)
 		cout << "Dojscie do wierzcholka " << podKonc << " jest niemozliwe.";
@@ -159,7 +159,7 @@ void GrafListy::dijkstra(int podPocz, int podKonc)
 			cout << " <-- " << numPom;	
 		} while (poprzednik[numPom] != -1);
 		cout << endl << "Koszt tego przejscia to: " << dojscie[podKonc] << endl;
-	}
+	}*/
 	delete[] dojscie;
 	delete[] poprzednik;
 	delete[] QS;
@@ -203,22 +203,10 @@ void GrafListy::prim()
 		delete p;
 	}
 	kolejka.clearHeap();
-	for (int i = 0; i < wierzcholek - 1; i++)
-		cout << i + 1 << ") " << zbiorKrawedzi[i].wPocz << "  " << zbiorKrawedzi[i].wKonc << "  " << zbiorKrawedzi[i].waga << endl;
+	//for (int i = 0; i < wierzcholek - 1; i++)
+	//	cout << i + 1 << ") " << zbiorKrawedzi[i].wPocz << "  " << zbiorKrawedzi[i].wKonc << "  " << zbiorKrawedzi[i].waga << endl;
 	delete[] odwiedzone;
 	delete[] zbiorKrawedzi;
-}
-
-void GrafListy::wyswietlSciezke(int *poprzednik, int start, int koniec)
-{
-	if (poprzednik[start] == koniec)
-	{
-		cout << poprzednik[start] << "->" << start << "->";
-		return;
-	}
-	wyswietlSciezke(poprzednik, poprzednik[koniec], start);
-
-	cout << koniec << " ";
 }
 
 bool GrafListy::czySpojny(int wklStart)

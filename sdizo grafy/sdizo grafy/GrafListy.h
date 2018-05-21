@@ -13,7 +13,6 @@ public:
 	void createGiven();
 	void dijkstra(int podPocz, int podKonc);
 	void prim();
-	void wyswietlSciezke(int *poprzednik, int start, int koniec);
 	bool czySpojny(int wklStart);
 	void wypisz();
 	void clearGraf();
